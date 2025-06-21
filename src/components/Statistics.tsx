@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import StatisticsHeader from './statistics/StatisticsHeader';
 import ChartSelector from './statistics/ChartSelector';
 import ChartFilters from './statistics/ChartFilters';
 import YieldsCharts from './statistics/YieldsCharts';
@@ -9,7 +8,7 @@ import FinancialCharts from './statistics/FinancialCharts';
 import EnvironmentalCharts from './statistics/EnvironmentalCharts';
 import { useStatistics } from '../contexts/StatisticsContext';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { FileText, Printer, ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, BarChart3 } from 'lucide-react';
 import { Button } from './ui/button';
 import PreviewPrintButton from './common/PreviewPrintButton';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from './ui/breadcrumb';
@@ -53,7 +52,6 @@ const Statistics = () => {
     updateDataWithFilters(newPeriod, newCropFilter);
   };
   
-  // Get the current chart data based on the active chart
   const getCurrentChartData = () => {
     switch (currentChart) {
       case 'yields':
@@ -67,7 +65,6 @@ const Statistics = () => {
     }
   };
   
-  // Get columns for the current chart
   const getChartColumns = () => {
     switch (currentChart) {
       case 'yields':
@@ -97,14 +94,23 @@ const Statistics = () => {
     }
   };
   
-  // Handle export for the chart filters
   const handleExportData = async () => {
     console.log(`Exportation des données ${currentChart} en cours...`);
   };
   
   return (
     <div className="p-3 md:p-6 animate-enter">
-      <StatisticsHeader />
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-blue-100 rounded-lg">
+            <BarChart3 className="h-6 w-6 text-blue-600" />
+          </div>
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Statistiques</h1>
+            <p className="text-gray-600">Analysez les performances de votre exploitation</p>
+          </div>
+        </div>
+      </div>
       
       <Breadcrumb className="mb-4">
         <BreadcrumbList>

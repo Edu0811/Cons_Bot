@@ -1,9 +1,9 @@
+
 import React, { useState, useRef } from 'react';
 import PageLayout from '../components/layout/PageLayout';
 import PageHeader from '../components/layout/PageHeader';
 import TabContainer, { TabItem } from '../components/layout/TabContainer';
 import Inventory from '../components/Inventory';
-import GuadeloupeSpecificCrops from '../components/GuadeloupeSpecificCrops';
 import GuadeloupeHarvestTracking from '../components/GuadeloupeHarvestTracking';
 import GuadeloupeWeatherAlerts from '../components/GuadeloupeWeatherAlerts';
 import { Button } from '../components/ui/button';
@@ -44,8 +44,8 @@ const InventoryPage = () => {
   const handleExportData = () => {
     if (activeTab === 'inventory') {
       console.log("Export des données d'inventaire lancé");
-    } else if (activeTab === 'crops') {
-      console.log("Export des données de cultures");
+    } else if (activeTab === 'harvest') {
+      console.log("Export des données de récoltes");
     } else if (activeTab === 'weather') {
       console.log("Export des données météo");
     }
@@ -71,7 +71,7 @@ const InventoryPage = () => {
 
   const handleAddItem = () => {
     const actionText = activeTab === 'inventory' ? 'stock' : 
-                      activeTab === 'crops' ? 'culture' : 
+                      activeTab === 'harvest' ? 'récolte' : 
                       activeTab === 'weather' ? 'alerte' : 'élément';
                       
     console.log(`Fonctionnalité d'ajout de ${actionText} activée`);
@@ -143,7 +143,7 @@ const InventoryPage = () => {
         >
           <Plus className="mr-2 h-4 w-4" />
           {activeTab === 'inventory' ? 'Ajouter un stock' : 
-           activeTab === 'crops' ? 'Ajouter une culture' : 
+           activeTab === 'harvest' ? 'Ajouter une récolte' : 
            activeTab === 'weather' ? 'Ajouter une alerte' : 'Ajouter'}
         </Button>
       </div>
@@ -159,7 +159,7 @@ const InventoryPage = () => {
       >
         <div className="relative flex-grow">
           <Input 
-            placeholder={`Rechercher dans ${activeTab === 'inventory' ? 'l\'inventaire' : activeTab === 'crops' ? 'les cultures' : 'les alertes'}`} 
+            placeholder={`Rechercher dans ${activeTab === 'inventory' ? 'l\'inventaire' : activeTab === 'harvest' ? 'les récoltes' : 'les alertes'}`} 
             value={searchTerm}
             onChange={handleSearchChange}
             className="pl-8"
@@ -186,10 +186,9 @@ const InventoryPage = () => {
     );
   };
 
-  const cropsContent = (
+  const harvestContent = (
     <StatisticsProvider>
       <div className="space-y-8">
-        <GuadeloupeSpecificCrops />
         <GuadeloupeHarvestTracking />
       </div>
     </StatisticsProvider>
@@ -202,9 +201,9 @@ const InventoryPage = () => {
       content: <Inventory dateRange={dateRange} searchTerm={searchTerm} />
     },
     {
-      value: 'crops',
-      label: 'Cultures',
-      content: cropsContent
+      value: 'harvest',
+      label: 'Récoltes',
+      content: harvestContent
     },
     {
       value: 'weather',
@@ -218,7 +217,7 @@ const InventoryPage = () => {
     
     const tabLabels = {
       inventory: 'l\'Inventaire',
-      crops: 'les Cultures',
+      harvest: 'les Récoltes',
       weather: 'les Alertes Météo'
     };
     

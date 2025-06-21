@@ -4,9 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { useStatistics } from '../../contexts/StatisticsContext';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from '@/components/ui/button';
-import { Download, Camera, Share2 } from 'lucide-react';
+import { Download, Share2 } from 'lucide-react';
 import { toast } from 'sonner';
-import TechnicalSheetButton from '../common/TechnicalSheetButton';
 
 const YieldsCharts = () => {
   const { yieldData, period } = useStatistics();
@@ -195,18 +194,6 @@ const YieldsCharts = () => {
                     <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: colors[item.name as keyof typeof colors] || '#4CAF50' }}></span>
                     {item.name}
                   </CardTitle>
-                  <TechnicalSheetButton 
-                    data={{ 
-                      name: item.name,
-                      currentYield: item.current,
-                      previousYield: item.previous,
-                      unit: item.unit
-                    }} 
-                    variant="outline"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Camera className="h-4 w-4" />
-                  </TechnicalSheetButton>
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
