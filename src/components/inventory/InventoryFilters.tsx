@@ -1,117 +1,57 @@
 
 import React from 'react';
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Search, Filter, ChevronDown } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+import { Input } from '../ui/input';
+import { DatePickerWithRange } from '../ui/date-range-picker';
+import { DateRange } from 'react-day-picker';
+import { motion } from 'framer-motion';
 
 interface InventoryFiltersProps {
+  activeTab: string;
   searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  categoryFilter: string;
-  setCategoryFilter: (category: string) => void;
-  categories: string[];
-  sortBy: string;
-  setSortBy: (field: string) => void;
-  sortOrder: 'asc' | 'desc';
-  setSortOrder: (order: 'asc' | 'desc') => void;
-  className?: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  dateRange?: DateRange;
+  onDateRangeChange: (range: DateRange | undefined) => void;
 }
 
 const InventoryFilters = ({
+  activeTab,
   searchTerm,
-  setSearchTerm,
-  categoryFilter,
-  setCategoryFilter,
-  categories,
-  sortBy,
-  setSortBy,
-  sortOrder,
-  setSortOrder,
-  className = ''
+  onSearchChange,
+  dateRange,
+  onDateRangeChange
 }: InventoryFiltersProps) => {
-  
-  const toggleSort = (field: string) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(field);
-      setSortOrder('asc');
-    }
-  };
-  
   return (
-    <div className={`flex flex-col md:flex-row gap-3 ${className}`}>
+    <motion.div 
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col md:flex-row gap-3 w-full"
+    >
       <div className="relative flex-grow">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input 
-          type="text" 
-          placeholder="Rechercher un article..." 
-          className="pl-10"
+          placeholder={`Rechercher dans ${activeTab === 'inventory' ? 'l\'inventaire' : activeTab === 'harvest' ? 'les récoltes' : 'les alertes'}`} 
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={onSearchChange}
+          className="pl-8"
+        />
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground"
+          fill="none" 
+          viewBox="0 0 24 24" 
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+      <div className="w-full md:w-[300px]">
+        <DatePickerWithRange
+          date={dateRange}
+          setDate={onDateRangeChange}
+          placeholderText="Filtrer par date"
+          align="end"
         />
       </div>
-      <div className="flex gap-3">
-        <div className="relative">
-          <select 
-            className="h-10 appearance-none pl-3 pr-8 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring bg-white"
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value)}
-            aria-label="Filtrer par catégorie"
-          >
-            {categories.map(category => (
-              <option key={category} value={category}>
-                {category === 'all' ? 'Toutes catégories' : category}
-              </option>
-            ))}
-          </select>
-          <Filter className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-        </div>
-        
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="flex items-center gap-1">
-              <span>Trier</span>
-              <ChevronDown className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => toggleSort('name')} className="flex justify-between">
-              <span>Nom</span>
-              {sortBy === 'name' && (
-                <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => toggleSort('quantity')} className="flex justify-between">
-              <span>Quantité</span>
-              {sortBy === 'quantity' && (
-                <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => toggleSort('price')} className="flex justify-between">
-              <span>Prix</span>
-              {sortBy === 'price' && (
-                <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
-              )}
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => toggleSort('lastUpdated')} className="flex justify-between">
-              <span>Date de mise à jour</span>
-              {sortBy === 'lastUpdated' && (
-                <span>{sortOrder === 'asc' ? '↑' : '↓'}</span>
-              )}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </div>
+    </motion.div>
   );
 };
 
