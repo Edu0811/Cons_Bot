@@ -9,26 +9,13 @@ import {
   Wallet, 
   BarChart2, 
   Menu, 
-  X,
-  Sun,
-  Moon,
-  ChevronRight
+  X
 } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
   
   const toggleSidebar = () => setIsOpen(!isOpen);
-  
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-    }
-  };
 
   const navItems = [
     { title: 'Tableau de bord', path: '/', icon: Home },
@@ -39,16 +26,13 @@ const Navbar = () => {
     { title: 'Statistiques', path: '/', icon: BarChart2 },
   ];
 
-  const isActive = (path: string) => path === '/';
-
   return (
     <>
       {/* Mobile Navigation Toggle */}
       <div className="fixed top-4 left-4 z-50 md:hidden">
         <button 
           onClick={toggleSidebar} 
-          className="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-all active:scale-95 dark:bg-gray-800 dark:hover:bg-gray-700"
-          aria-label="Toggle navigation"
+          className="p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-all"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -56,52 +40,34 @@ const Navbar = () => {
 
       {/* Sidebar Navigation */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-border shadow-lg transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-border shadow-lg transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-        } md:relative md:translate-x-0 flex flex-col h-full overflow-y-auto`}
+        } md:relative md:translate-x-0 flex flex-col h-full`}
       >
-        <div className="p-4 border-b border-border flex items-center justify-between">
+        <div className="p-4 border-b border-border">
           <Link to="/" className="flex items-center space-x-2">
             <Sprout className="h-6 w-6 text-agri-primary" />
             <span className="text-lg font-bold text-foreground">Agri Dom</span>
           </Link>
-          <button 
-            onClick={toggleTheme} 
-            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
         </div>
 
-        <nav className="flex-1 py-4 px-3 space-y-1 overflow-y-auto">
+        <nav className="flex-1 py-4 px-3 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`nav-link flex items-center space-x-3 py-3 px-4 rounded-lg transition-colors ${
-                isActive(item.path) 
-                  ? 'bg-agri-primary/10 text-agri-primary font-medium' 
-                  : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-foreground'
-              }`}
+              className="nav-link flex items-center space-x-3 py-3 px-4 rounded-lg transition-colors bg-agri-primary/10 text-agri-primary font-medium"
               onClick={() => setIsOpen(false)}
             >
-              <item.icon className={`h-5 w-5 ${isActive(item.path) ? 'text-agri-primary' : ''}`} />
+              <item.icon className="h-5 w-5 text-agri-primary" />
               <span>{item.title}</span>
-              
-              {isActive(item.path) && (
-                <div className="ml-auto flex items-center">
-                  <span className="h-2 w-2 rounded-full bg-agri-primary animate-pulse-slow"></span>
-                  <ChevronRight className="h-4 w-4 text-agri-primary ml-1" />
-                </div>
-              )}
             </Link>
           ))}
         </nav>
 
         <div className="p-4 border-t border-border">
           <div className="flex items-center space-x-3 px-3 py-2">
-            <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
               <span className="text-sm font-medium">AD</span>
             </div>
             <div className="flex-1 min-w-0">
@@ -115,9 +81,9 @@ const Navbar = () => {
       {/* Overlay for mobile */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden backdrop-blur-sm transition-opacity duration-300"
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
           onClick={() => setIsOpen(false)}
-        ></div>
+        />
       )}
     </>
   );
