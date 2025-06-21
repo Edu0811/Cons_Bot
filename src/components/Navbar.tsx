@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Home, 
   MapPin, 
@@ -12,32 +12,12 @@ import {
   X,
   Sun,
   Moon,
-  ChevronRight,
-  Settings,
-  Users,
-  FileText
+  ChevronRight
 } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const location = useLocation();
-  
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
-  
-  // Handle theme toggle
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      setIsDarkMode(true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
   
   const toggleSidebar = () => setIsOpen(!isOpen);
   
@@ -45,33 +25,25 @@ const Navbar = () => {
     setIsDarkMode(!isDarkMode);
     if (isDarkMode) {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
     } else {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
     }
   };
 
   const navItems = [
     { title: 'Tableau de bord', path: '/', icon: Home },
-    { title: 'Parcelles', path: '/parcelles', icon: MapPin },
-    { title: 'Cultures', path: '/cultures', icon: Sprout },
-    { title: 'Inventaire', path: '/inventaire', icon: Package },
-    { title: 'Finances', path: '/finances', icon: Wallet },
-    { title: 'Statistiques', path: '/statistiques', icon: BarChart2 },
-    { title: 'Rapports', path: '/rapports', icon: FileText },
-    { title: 'Paramètres', path: '/parametres', icon: Settings },
+    { title: 'Parcelles', path: '/', icon: MapPin },
+    { title: 'Cultures', path: '/', icon: Sprout },
+    { title: 'Inventaire', path: '/', icon: Package },
+    { title: 'Finances', path: '/', icon: Wallet },
+    { title: 'Statistiques', path: '/', icon: BarChart2 },
   ];
 
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
-    return false;
-  };
+  const isActive = (path: string) => path === '/';
 
   return (
     <>
-      {/* Mobile Navigation Toggle with improved animation */}
+      {/* Mobile Navigation Toggle */}
       <div className="fixed top-4 left-4 z-50 md:hidden">
         <button 
           onClick={toggleSidebar} 
@@ -82,7 +54,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Sidebar Navigation with improved animation and transitions */}
+      {/* Sidebar Navigation */}
       <aside 
         className={`fixed inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-border shadow-lg transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
@@ -140,7 +112,7 @@ const Navbar = () => {
         </div>
       </aside>
 
-      {/* Overlay for mobile with improved transition */}
+      {/* Overlay for mobile */}
       {isOpen && (
         <div 
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden backdrop-blur-sm transition-opacity duration-300"
