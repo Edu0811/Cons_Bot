@@ -7,7 +7,6 @@ import {
   Sprout, 
   Package, 
   Wallet, 
-  BarChart2, 
   Menu, 
   X
 } from 'lucide-react';
@@ -18,12 +17,11 @@ const Navbar = () => {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const navItems = [
-    { title: 'Tableau de bord', path: '/', icon: Home },
-    { title: 'Parcelles', path: '/', icon: MapPin },
-    { title: 'Cultures', path: '/', icon: Sprout },
-    { title: 'Inventaire', path: '/', icon: Package },
-    { title: 'Finances', path: '/', icon: Wallet },
-    { title: 'Statistiques', path: '/', icon: BarChart2 },
+    { title: 'Home', path: '/', icon: Home },
+    { title: 'Cons.GPT', path: '/', icon: MapPin },
+    { title: 'Cons.NotebookLM', path: '/', icon: Sprout },
+    { title: 'Lexical Search', path: '/', icon: Package },
+    { title: 'Context Search', path: '/', icon: Wallet },
   ];
 
   return (
@@ -40,14 +38,14 @@ const Navbar = () => {
 
       {/* Sidebar Navigation */}
       <aside 
-        className={`fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-border shadow-lg transform transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 z-40 w-72 bg-white border-r border-border shadow-lg transform transition-transform duration-300 ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         } md:relative md:translate-x-0 flex flex-col h-full`}
       >
         <div className="p-4 border-b border-border">
           <Link to="/" className="flex items-center space-x-2">
             <Sprout className="h-6 w-6 text-agri-primary" />
-            <span className="text-lg font-bold text-foreground">Agri Dom</span>
+            <span className="text-lg font-bold text-foreground">Cons.IA</span>
           </Link>
         </div>
 
@@ -68,11 +66,11 @@ const Navbar = () => {
         <div className="p-4 border-t border-border">
           <div className="flex items-center space-x-3 px-3 py-2">
             <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-              <span className="text-sm font-medium">AD</span>
+              <span className="text-sm font-medium">EV</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">Utilisateur</p>
-              <p className="text-xs text-muted-foreground truncate">agriculteur@example.com</p>
+              <p className="text-sm font-medium truncate">Evoluciólogo</p>
+              <p className="text-xs text-muted-foreground truncate">transmentor@interludio.ccce</p>
             </div>
           </div>
         </div>
