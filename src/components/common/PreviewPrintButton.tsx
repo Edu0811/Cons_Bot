@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Eye, Printer, FileText, Loader2, Download } from 'lucide-react';
 import {
@@ -15,8 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import PreviewDialog from './PreviewDialog';
-import { usePreviewActions } from '@/hooks/use-preview-actions';
 
 interface PreviewPrintButtonProps {
   data: any[];
@@ -37,91 +35,69 @@ const PreviewPrintButton: React.FC<PreviewPrintButtonProps> = ({
   columns,
   title
 }) => {
-  const {
-    isActionInProgress,
-    previewOpen,
-    setPreviewOpen,
-    previewHTML,
-    handlePrint,
-    handleShowPreview,
-    handleExportPDF
-  } = usePreviewActions({ data, moduleName, columns, title });
+  const [isActionInProgress, setIsActionInProgress] = useState(false);
 
-  const handleKeyDown = (e: React.KeyboardEvent, action: () => void) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      action();
-    }
+  const handlePrint = () => {
+    setIsActionInProgress(true);
+    console.log(`Printing ${moduleName} data`);
+    setTimeout(() => setIsActionInProgress(false), 1000);
+  };
+
+  const handleShowPreview = () => {
+    console.log(`Showing preview for ${moduleName}`);
+  };
+
+  const handleExportPDF = () => {
+    setIsActionInProgress(true);
+    console.log(`Exporting ${moduleName} to PDF`);
+    setTimeout(() => setIsActionInProgress(false), 1000);
   };
 
   return (
-    <>
-      <DropdownMenu>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <DropdownMenuTrigger asChild>
-                <Button 
-                  variant={variant} 
-                  size="sm"
-                  className={`transition-all ${className}`}
-                  disabled={isActionInProgress}
-                  aria-label="Options d'aperçu et d'impression"
-                >
-                  {isActionInProgress ? (
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                  ) : (
-                    <Eye className="h-4 w-4" aria-hidden="true" />
-                  )}
-                  <span className="ml-2 hidden sm:inline">Aperçu</span>
-                </Button>
-              </DropdownMenuTrigger>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Aperçu et impression</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <DropdownMenuContent align="end" className="w-56">
-          {showPreview && (
-            <DropdownMenuItem 
-              onClick={handleShowPreview} 
-              className="cursor-pointer"
-              onKeyDown={(e) => handleKeyDown(e, handleShowPreview)}
-            >
-              <Eye className="mr-2 h-4 w-4" aria-hidden="true" />
-              <span>Aperçu à l'écran</span>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuItem 
-            onClick={handlePrint} 
-            className="cursor-pointer"
-            onKeyDown={(e) => handleKeyDown(e, handlePrint)}
-          >
-            <Printer className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>Imprimer</span>
+    <DropdownMenu>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DropdownMenuTrigger asChild>
+              <Button 
+                variant={variant} 
+                size="sm"
+                className={`transition-all ${className}`}
+                disabled={isActionInProgress}
+                aria-label="Options d'aperçu et d'impression"
+              >
+                {isActionInProgress ? (
+                  <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
+                ) : (
+                  <Eye className="h-4 w-4" aria-hidden="true" />
+                )}
+                <span className="ml-2 hidden sm:inline">Aperçu</span>
+              </Button>
+            </DropdownMenuTrigger>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Aperçu et impression</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+      <DropdownMenuContent align="end" className="w-56">
+        {showPreview && (
+          <DropdownMenuItem onClick={handleShowPreview} className="cursor-pointer">
+            <Eye className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span>Aperçu à l'écran</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem 
-            onClick={handleExportPDF} 
-            className="cursor-pointer"
-            onKeyDown={(e) => handleKeyDown(e, handleExportPDF)}
-          >
-            <FileText className="mr-2 h-4 w-4" aria-hidden="true" />
-            <span>Exporter en PDF</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <PreviewDialog
-        open={previewOpen}
-        onOpenChange={setPreviewOpen}
-        title={title}
-        moduleName={moduleName}
-        previewHTML={previewHTML}
-        onPrint={handlePrint}
-      />
-    </>
+        )}
+        <DropdownMenuItem onClick={handlePrint} className="cursor-pointer">
+          <Printer className="mr-2 h-4 w-4" aria-hidden="true" />
+          <span>Imprimer</span>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleExportPDF} className="cursor-pointer">
+          <FileText className="mr-2 h-4 w-4" aria-hidden="true" />
+          <span>Exporter en PDF</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

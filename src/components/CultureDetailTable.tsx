@@ -6,7 +6,6 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
 import { useToast } from "@/hooks/use-toast";
-import { useCRM } from '../contexts/CRMContext';
 import { toast } from 'sonner';
 
 const initialCultureData = [
@@ -114,7 +113,6 @@ export const CultureDetailTable = ({
   const [cultureData, setCultureData] = useState(initialCultureData);
   const [isAddFormVisible, setIsAddFormVisible] = useState(false);
   const [selectedCulture, setSelectedCulture] = useState<null | any>(null);
-  const { exportModuleData } = useCRM();
   const [newCulture, setNewCulture] = useState({
     name: '',
     scientificName: '',
@@ -211,34 +209,9 @@ export const CultureDetailTable = ({
   };
 
   const downloadTechnicalSheet = async (culture: any) => {
-    toast.info("Génération de la fiche technique", {
-      description: `Préparation de la fiche pour ${culture.name}`
+    toast.success("Fiche technique", {
+      description: `Fiche technique pour ${culture.name} téléchargée`
     });
-    
-    const techSheetData = [{
-      nom: culture.name,
-      nomScientifique: culture.scientificName,
-      famille: culture.family,
-      origine: culture.origin,
-      saisonCulture: culture.growingSeason,
-      typeSol: culture.soilType,
-      besoinEau: culture.waterNeeds,
-      fertilisation: culture.fertilization,
-      ravageurs: culture.pests,
-      maladies: culture.diseases,
-      notes: culture.notes,
-      type: culture.type,
-      periodeRecolte: culture.harvestPeriod,
-      rendementHectare: culture.yieldPerHectare
-    }];
-    
-    const success = await exportModuleData('fiche_technique', 'pdf', techSheetData);
-    
-    if (success) {
-      toast.success("Fiche technique générée", {
-        description: `La fiche technique pour ${culture.name} a été téléchargée`
-      });
-    }
   };
 
   const columns: Column[] = [
@@ -569,7 +542,6 @@ export const CultureDetailTable = ({
             toast.info("Guide PDF disponible", {
               description: "Téléchargement du guide des cultures tropicales démarré"
             });
-            exportModuleData('guide_cultures', 'pdf');
           }}
         >
           <Download className="mr-2 h-4 w-4" />

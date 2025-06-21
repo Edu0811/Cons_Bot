@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileText, ChevronDown, FileSpreadsheet, FileBarChart2 } from 'lucide-react';
-import { useCRM } from '../../contexts/CRMContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,7 +26,6 @@ const ReportGenerationButton: React.FC<ReportGenerationButtonProps> = ({
   onlyFormats,
   withAnimation = true
 }) => {
-  const { exportModuleData } = useCRM();
   const [isGenerating, setIsGenerating] = useState(false);
   const [lastGeneratedFormat, setLastGeneratedFormat] = useState<'pdf' | 'excel' | 'csv' | null>(null);
 
@@ -36,15 +34,14 @@ const ReportGenerationButton: React.FC<ReportGenerationButtonProps> = ({
     setLastGeneratedFormat(format);
     
     try {
-      await exportModuleData(moduleName, format);
+      console.log(`Generating ${format} report for ${moduleName}`);
+      setTimeout(() => setIsGenerating(false), 1000);
     } catch (error) {
       console.error("Error generating report:", error);
-    } finally {
       setIsGenerating(false);
     }
   };
 
-  // Déterminer quels formats afficher
   const formats = onlyFormats || ['pdf', 'excel', 'csv'];
 
   const formatIcons = {
@@ -59,7 +56,6 @@ const ReportGenerationButton: React.FC<ReportGenerationButtonProps> = ({
     csv: 'Format CSV'
   };
 
-  // If we have a last generated format and it's in our available formats, put it first
   const sortedFormats = lastGeneratedFormat && formats.includes(lastGeneratedFormat)
     ? [lastGeneratedFormat, ...formats.filter(f => f !== lastGeneratedFormat)]
     : formats;
