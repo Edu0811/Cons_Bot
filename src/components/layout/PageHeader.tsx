@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { EditableField } from '../ui/editable-field';
-import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 
 interface PageHeaderProps {

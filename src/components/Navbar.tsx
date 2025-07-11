@@ -19,9 +19,9 @@ const Navbar = () => {
   const navItems = [
     { title: 'Home', path: '/', icon: Home },
     { title: 'Cons.GPT', path: '/', icon: MapPin },
-    { title: 'Cons.NotebookLM', path: '/', icon: Sprout },
+    { title: 'Cons.SLM', path: '/', icon: Sprout },
     { title: 'Lexical Search', path: '/', icon: Package },
-    { title: 'Context Search', path: '/', icon: Wallet },
+    { title: 'Semantic Search', path: '/', icon: Wallet },
   ];
 
   return (

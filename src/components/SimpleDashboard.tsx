@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MapPin, Sprout, Package, TrendingUp } from 'lucide-react';
+import { MapPin, Sprout, Package, TrendingUp, NotebookPen, Atom, LibraryBig, BookOpen, BookA, Bot} from 'lucide-react';
 import { Card, CardContent } from './ui/card';
 import {
   Tooltip,
@@ -11,11 +11,24 @@ import {
 
 const SimpleDashboard = () => {
   const statsCards = [
+
+    {
+      title: 'Cons.BOT',
+      // value: '8',
+      subtitle: 'Cons BOT',
+      icon: Bot,
+      color: 'text-red-600',
+      bgColor: 'bg-red-100',
+      onClick: () => window.open('https://consbot.onrender.com', '_blank'),
+      tooltip: 'Open ConsBOT in a new tab'
+    },
+
+
     {
       title: 'Cons.GPT',
       // value: '12',
       subtitle: 'OpenAI ChatGPT',
-      icon: MapPin,
+      icon: BookOpen,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100',
       onClick: () => window.open('https://chatgpt.com/g/g-9rjMAqtTg-consgpt', '_blank'),
@@ -25,29 +38,44 @@ const SimpleDashboard = () => {
       title: 'Cons.LM',
       // value: '8',
       subtitle: 'Google NotebookLM',
-      icon: Sprout,
+      icon: NotebookPen,
       color: 'text-green-600',
       bgColor: 'bg-green-100',
       onClick: () => window.open('https://notebooklm.google.com/notebook/c3528e65-0c2b-4a80-b3f2-2f22e3626b67?_gl=1*1plgwls*_ga*MTk3OTE1MzMxNC4xNzIzMTU4NzQz*_ga_W0LDH41ZCB*MTczMjM2NDM3Ni4yMy4xLjE3MzIzNjQzOTcuMzkuMC4w', '_blank'),
       tooltip: 'Open ConsNotebookLM in a new tab'
     },
+
+    {
+      title: 'Cons.ALL',
+      // value: '8',
+      subtitle: 'Google NotebookLM',
+      icon: Atom,
+      color: 'text-yellow-600',
+      bgColor: 'bg-yellow-100',
+      onClick: () => window.open('https://notebooklm.google.com/notebook/14ae1218-192e-4495-8d94-1b071082fe57?_gl=1*1plgwls*_ga*MTk3OTE1MzMxNC4xNzIzMTU4NzQz*_ga_W0LDH41ZCB*MTczMjM2NDM3Ni4yMy4xLjE3MzIzNjQzOTcuMzkuMC4w', '_blank'),
+      tooltip: 'Open ConsNotebookLM in a new tab'
+    },
+
     {
       title: 'Lexical Search',
-      // value: '85%',
-      subtitle: 'Literal terms search',
-      //description: 'Prof. Waldo Vieira Books',
-      icon: Package,
-      color: 'text-orange-600',
-      bgColor: 'bg-orange-100'
+      // value: '8',
+      subtitle: 'Google NotebookLM',
+      icon: LibraryBig,
+      color: 'text-pink-600',
+      bgColor: 'bg-pink-100',
+      onClick: () => window.open('https://lexicalsearch.onrender.com', '_blank'),
+      tooltip: 'Open Lexical Search in a new tab'
     },
+
     {
-      title: 'Context Search',
-      // value: '+12%',
-      subtitle: 'Vector Database Search',
-      //description: 'Prof. Waldo Vieira Books',
-      icon: TrendingUp,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-100'
+      title: 'Semantic Search',
+      // value: '8',
+      subtitle: 'Google NotebookLM',
+      icon: BookA,
+      color: 'text-orange-600',
+      bgColor: 'bg-orange-100',
+      onClick: () => window.open('https://semanticsearch.onrender.com', '_blank'),
+      tooltip: 'Open Semantic Search in a new tab'
     }
   ];
 
